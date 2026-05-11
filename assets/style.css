@@ -1,0 +1,285 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #222;
+}
+
+.hero {
+    min-height: 100vh;
+    background: linear-gradient(120deg, #1e3c72, #2a5298);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-box {
+    width: 80%;
+    max-width: 800px;
+    background: white;
+    padding: 40px;
+    border-radius: 18px;
+    text-align: center;
+}
+
+.hero-box h1 {
+    color: #1e3c72;
+    margin-bottom: 20px;
+}
+
+.hero-box p {
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+.menu a,
+.btn {
+    display: inline-block;
+    padding: 10px 16px;
+    margin: 6px;
+    background: #1e3c72;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    border: none;
+}
+
+.menu a:hover,
+.btn:hover {
+    background: #2a5298;
+}
+
+.container {
+    width: 95%;
+    margin: 30px auto;
+}
+
+h2 {
+    color: #1e3c72;
+    margin-bottom: 18px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    margin-top: 20px;
+}
+
+th {
+    background: #1e3c72;
+    color: white;
+}
+
+th, td {
+    padding: 9px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+tr:nth-child(even) {
+    background: #f2f6ff;
+}
+
+.btn-small {
+    display: inline-block;
+    padding: 6px 10px;
+    background: #2a5298;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 2px;
+    font-size: 13px;
+}
+
+.danger {
+    background: #c0392b;
+}
+
+.login-box {
+    width: 380px;
+    background: white;
+    margin: 100px auto;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.login-box h2 {
+    margin-bottom: 20px;
+}
+
+.login-box input,
+.form-box input,
+.form-box textarea,
+.search-box input,
+.search-box select {
+    width: 100%;
+    padding: 11px;
+    margin: 8px 0 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.login-box button,
+.form-box button,
+.search-box button {
+    padding: 11px 18px;
+    background: #1e3c72;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.login-box button:hover,
+.form-box button:hover,
+.search-box button:hover {
+    background: #2a5298;
+}
+
+.login-box a {
+    display: inline-block;
+    margin-top: 15px;
+    color: #1e3c72;
+    text-decoration: none;
+}
+
+.error {
+    background: #ffe0e0;
+    color: #c0392b;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.search-box {
+    background: white;
+    padding: 18px;
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+.form-box {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    margin-top: 20px;
+    max-width: 700px;
+}
+
+.form-box label {
+    font-weight: bold;
+    display: block;
+    margin-top: 8px;
+}
+
+.form-box textarea {
+    height: 120px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    margin-top: 20px;
+    line-height: 1.8;
+}
+
+/* SIDEBAR ADMIN */
+.wrapper {
+    display: flex;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #1e3c72;
+    color: white;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.sidebar a:hover {
+    background: #2a5298;
+}
+
+.main-content {
+    margin-left: 260px;
+    padding: 20px;
+    width: 100%;
+}
+
+.wrapper {
+    display: flex;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #1e3c72;
+    color: white;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    margin-bottom: 30px;
+    text-align: center;
+    color: white;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.sidebar a:hover {
+    background: #2a5298;
+}
+
+.main-content {
+    margin-left: 260px;
+    padding: 20px;
+    width: calc(100% - 260px);
+}
+
+.search-box button {
+    margin-right: 8px;
+}
+
+.search-box select {
+    width: 100%;
+    padding: 11px;
+    margin: 8px 0 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}

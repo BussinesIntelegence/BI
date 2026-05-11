@@ -11,10 +11,7 @@
 
                 <img
                     loading="lazy"
-                    src="{{ $wisata->gambar
-                        ? asset('assets/images/wisata/' . $wisata->gambar)
-                        : 'https://via.placeholder.com/600x400?text=Wisata+Jogja' }}"
-
+                    src="{{ $wisata->image_url }}"
                     class="card-img-top wisata-image"
                     alt="{{ $wisata->nama }}"
                 >

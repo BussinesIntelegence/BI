@@ -106,13 +106,6 @@
 
             <div class="d-flex align-items-center gap-3 mt-4 mt-lg-0">
 
-                <!-- Notification -->
-                <button class="icon-button">
-
-                    <i class="bi bi-bell"></i>
-
-                </button>
-
                 <!-- Admin Login -->
                 <a href="/login"
                     class="icon-button d-flex align-items-center justify-content-center text-dark text-decoration-none">

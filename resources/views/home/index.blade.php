@@ -2,22 +2,51 @@
 
 @section('content')
 
-<div class="container py-5">
+<div class="home-page">
 
-    <!-- =========================
+    <!-- ========================================
     HERO SECTION
-    ========================== -->
+    ========================================= -->
 
-    <div class="hero-home mb-5">
+    <section class="hero-home">
 
-        <div class="row align-items-center">
+        <!-- VIDEO BACKGROUND -->
+        <video
+            autoplay
+            muted
+            loop
+            playsinline
+            class="hero-video"
+        >
 
-            <div class="col-lg-7">
+            <source
+                src="{{ asset('assets/videos/jogja-cinematic.mp4') }}"
+                type="video/mp4"
+            >
+
+        </video>
+
+        <!-- Overlay -->
+        <div class="hero-overlay"></div>
+
+        <!-- Content -->
+        <div class="container h-100 d-flex align-items-center">
+
+            <div class="hero-content position-relative">
+
+                <!-- Badge -->
+                <div class="hero-badge">
+
+                    Explore Cultural Heritage of Yogyakarta
+
+                </div>
 
                 <!-- Heading -->
-                <h1 class="hero-title mb-4">
+                <h1 class="hero-title">
 
-                    Discover Yogyakarta
+                    Discover
+                    The Soul of
+                    Yogyakarta
 
                 </h1>
 
@@ -25,115 +54,203 @@
                 <p class="hero-subtitle">
 
                     Jelajahi destinasi wisata terbaik di Yogyakarta
-                    mulai dari budaya, alam, pantai hingga kuliner.
+                    mulai dari budaya,
+                    alam,
+                    pantai,
+                    hingga pengalaman autentik berbasis
+                    rekomendasi pintar DSS.
+
+                </p>
+
+                <!-- Search -->
+                <form
+                    action="/explore"
+                    method="GET"
+                    class="hero-search-box"
+                >
+
+                    <i class="bi bi-search"></i>
+
+                    <input
+                        type="text"
+                        name="search"
+                        placeholder="Cari destinasi wisata..."
+                    >
+
+                    <button type="submit">
+
+                        Explore
+
+                    </button>
+
+                </form>
+
+                <!-- Stats -->
+                <div class="hero-stats">
+
+                    <!-- Item -->
+                    <div class="hero-stat-item">
+
+                        <strong>
+
+                            473+
+
+                        </strong>
+
+                        <span>
+
+                            Destinations
+
+                        </span>
+
+                    </div>
+
+                    <!-- Item -->
+                    <div class="hero-stat-item">
+
+                        <strong>
+
+                            4.8★
+
+                        </strong>
+
+                        <span>
+
+                            Average Rating
+
+                        </span>
+
+                    </div>
+
+                    <!-- Item -->
+                    <div class="hero-stat-item">
+
+                        <strong>
+
+                            DSS Powered
+
+                        </strong>
+
+                        <span>
+
+                            Smart Recommendation
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ========================================
+    TOP DESTINATION SECTION
+    ========================================= -->
+
+    <section class="destination-section py-5">
+
+        <div class="container">
+
+            <!-- Section Heading -->
+            <div class="section-heading mb-5">
+
+                <h2 class="top-title">
+
+                    Top Destinasi
+
+                </h2>
+
+                <p class="text-secondary">
+
+                    Pilihan terbaik untuk petualangan Anda minggu ini.
 
                 </p>
 
             </div>
 
-        </div>
+            <!-- Cards -->
+            <div class="row g-4">
 
-    </div>
+                @foreach($wisatas as $wisata)
 
-    <!-- =========================
-    TOP DESTINASI
-    ========================== -->
+                <div class="col-lg-4 col-md-6">
 
-    <div class="mb-4">
+                    <div class="card wisata-card h-100">
 
-        <h2 class="top-title">
+                        <!-- Image -->
+                        <div class="position-relative overflow-hidden">
 
-            Top Destinasi
+                            <img
+                                loading="lazy"
+                                src="{{ $wisata->image_url }}"
+                                class="card-img-top wisata-image"
+                                alt="{{ $wisata->nama }}"
+                            >
 
-        </h2>
+                            <!-- Rating -->
+                            <div class="rating-box">
 
-        <p class="text-secondary">
+                                ⭐ {{ number_format($wisata->rating,1) }}
 
-            Pilihan terbaik untuk petualangan Anda minggu ini.
+                            </div>
 
-        </p>
+                        </div>
 
-    </div>
+                        <!-- Body -->
+                        <div class="card-body d-flex flex-column p-4">
 
-    <!-- =========================
-    CARD WISATA
-    ========================== -->
+                            <!-- Category -->
+                            <p class="category-text mb-2">
 
-    <div class="row g-4">
+                                {{ $wisata->kategori }}
 
-        @foreach($wisatas as $wisata)
+                            </p>
 
-        <div class="col-lg-4 col-md-6">
+                            <!-- Title -->
+                            <h3 class="wisata-title mb-3">
 
-            <div class="card wisata-card h-100">
+                                {{ $wisata->nama }}
 
-                <!-- Image -->
-                <div class="position-relative">
+                            </h3>
 
-                    <img
-                        loading="lazy"
-                        src="{{ $wisata->gambar
-                            ? asset('assets/images/wisata/' . $wisata->gambar)
-                            : 'https://via.placeholder.com/600x400?text=Wisata+Jogja' }}"
+                            <!-- Description -->
+                            <p class="text-secondary mb-4">
 
-                        class="card-img-top wisata-image"
-                        alt="{{ $wisata->nama }}"
-                    >
+                                {{ \Illuminate\Support\Str::limit($wisata->deskripsi, 90) }}
 
-                    <!-- Rating -->
-                    <div class="rating-box">
+                            </p>
 
-                        ⭐ {{ number_format($wisata->rating,1) }}
+                            <!-- Footer -->
+                            <div class="mt-auto">
 
-                    </div>
+                                <a
+                                    href="/wisata/{{ $wisata->id }}"
+                                    class="btn btn-outline-dark w-100"
+                                >
 
-                </div>
+                                    View Details
 
-                <!-- Body -->
-                <div class="card-body d-flex flex-column">
+                                </a>
 
-                    <!-- Category -->
-                    <p class="category-text mb-2">
+                            </div>
 
-                        {{ $wisata->kategori }}
-
-                    </p>
-
-                    <!-- Title -->
-                    <h3 class="wisata-title mb-3">
-
-                        {{ $wisata->nama }}
-
-                    </h3>
-
-                    <!-- Description -->
-                    <p class="text-secondary mb-4">
-
-                        {{ \Illuminate\Support\Str::limit($wisata->deskripsi, 90) }}
-
-                    </p>
-
-                    <!-- Footer -->
-                    <div class="mt-auto">
-
-                        <a href="/wisata/{{ $wisata->id }}"
-                            class="btn btn-outline-dark rounded-4 w-100">
-
-                            View Details
-
-                        </a>
+                        </div>
 
                     </div>
 
                 </div>
+
+                @endforeach
 
             </div>
 
         </div>
 
-        @endforeach
-
-    </div>
+    </section>
 
 </div>
 

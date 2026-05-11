@@ -55,7 +55,9 @@ class RecommendationController extends Controller
 
         }
 
-        // Jika kosong
+        // =========================
+        // JIKA HASIL KOSONG
+        // =========================
 
         if ($wisatas->count() == 0) {
 
@@ -64,11 +66,17 @@ class RecommendationController extends Controller
                 [
 
                     'wisatas' => collect([]),
+
                     'topWisatas' => collect([]),
 
+                    'topResult' => null,
+
                     'totalWisata' => 0,
+
                     'avgHarga' => 0,
+
                     'topRating' => 0,
+
                     'topKategori' => '-'
 
                 ]
@@ -76,14 +84,14 @@ class RecommendationController extends Controller
 
         }
 
-
-
         // =========================
         // NILAI MAX & MIN
         // =========================
 
         $maxRating = $wisatas->max('rating');
+
         $maxReview = $wisatas->max('total_review');
+
         $minHarga = $wisatas->min('harga_weekday');
 
         // =========================
@@ -91,7 +99,9 @@ class RecommendationController extends Controller
         // =========================
 
         $bobotHarga = 0.4;
+
         $bobotRating = 0.35;
+
         $bobotReview = 0.25;
 
         // =========================
@@ -133,7 +143,7 @@ class RecommendationController extends Controller
                 ($nReview * $bobotReview);
 
             // =========================
-            // SIMPAN DETAIL PERHITUNGAN
+            // SIMPAN DETAIL
             // =========================
 
             $wisata->n_harga = round($nHarga, 3);
@@ -154,9 +164,10 @@ class RecommendationController extends Controller
 
         $hasil = $hasil->sortByDesc('saw_score');
 
-        // Ranking
+        // Reset index
         $hasil = $hasil->values();
 
+        // Ranking
         foreach($hasil as $index => $item){
 
             $item->ranking = $index + 1;
@@ -169,6 +180,11 @@ class RecommendationController extends Controller
 
         $topWisatas = $hasil->take(6);
 
+        // =========================
+        // BEST RESULT
+        // =========================
+
+        $topResult = $hasil->first();
 
         // =========================
         // INSIGHT DATA
@@ -196,8 +212,6 @@ class RecommendationController extends Controller
             ->keys()
             ->first();
 
-
-
         // =========================
         // RETURN VIEW
         // =========================
@@ -209,11 +223,19 @@ class RecommendationController extends Controller
                 // Semua hasil SAW
                 'wisatas' => $hasil,
 
-                // Hanya top recommendation
+                // Top recommendation
                 'topWisatas' => $topWisatas,
+
+                // BEST RESULT
+                'topResult' => $topResult,
+
+                // Insight
                 'totalWisata' => $totalWisata,
+
                 'avgHarga' => $avgHarga,
+
                 'topRating' => $topRating,
+
                 'topKategori' => $topKategori,
 
             ]

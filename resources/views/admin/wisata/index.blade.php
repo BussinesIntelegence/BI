@@ -29,20 +29,6 @@ HEADER
     <!-- RIGHT -->
     <div class="d-flex gap-3">
 
-        <button class="btn btn-light custom-outline-btn">
-
-            <i class="bi bi-funnel"></i>
-            Filters
-
-        </button>
-
-        <button class="btn btn-light custom-outline-btn">
-
-            <i class="bi bi-download"></i>
-            Export
-
-        </button>
-
         <a href="/admin/wisata/create"
             class="btn btn-maroon">
 
@@ -128,12 +114,15 @@ TABLE BOX
 
                             <!-- Image -->
                             <img
+
                                 src="{{ $wisata->gambar
                                     ? asset('assets/images/wisata/' . $wisata->gambar)
-                                    : 'https://via.placeholder.com/80x80?text=Wisata' }}"
+                                    : 'https://picsum.photos/seed/' . $wisata->id . '/200/200' }}"
 
-                                class="admin-wisata-image"
+                                class="admin-wisata-thumb"
+
                                 alt="{{ $wisata->nama }}"
+
                             >
 
                             <!-- Info -->
@@ -221,7 +210,7 @@ TABLE BOX
 
                                 <button
                                     type="button"
-                                    class="btn-action delete-btn"
+                                    class="action-btn delete-action-btn"
                                     onclick="openDeleteModal(this)"
                                 >
 

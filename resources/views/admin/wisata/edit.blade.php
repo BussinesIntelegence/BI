@@ -153,11 +153,15 @@ FORM BOX
                     </label>
 
                     <img
+
                         src="{{ $wisata->gambar
                             ? asset('assets/images/wisata/' . $wisata->gambar)
-                            : 'https://via.placeholder.com/400x300?text=No+Image' }}"
+                            : 'https://picsum.photos/seed/' . $wisata->id . '/200/200' }}"
 
-                        class="img-fluid rounded-4"
+                        class="edit-preview-image"
+
+                        alt="{{ $wisata->nama }}"
+
                     >
 
                 </div>

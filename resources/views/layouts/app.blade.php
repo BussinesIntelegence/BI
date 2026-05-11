@@ -71,7 +71,11 @@ LOADING SCREEN
 </div>
 
     <!-- Navbar -->
+    @if(!request()->is('login'))
+
     @include('partials.navbar')
+
+    @endif
 
     <!-- Main Content -->
     <main>
@@ -79,7 +83,11 @@ LOADING SCREEN
     </main>
 
     <!-- Footer -->
+    @if(!request()->is('login'))
+
     @include('partials.footer')
+
+    @endif
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

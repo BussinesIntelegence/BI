@@ -2,68 +2,152 @@
 
 @section('content')
 
-<div class="container py-5">
+<div class="admin-login-wrapper">
 
-    <div class="row justify-content-center">
+    <!-- ========================================
+    LEFT SIDE
+    ========================================= -->
 
-        <div class="col-lg-5">
+    <div class="login-left">
 
-            <div class="card border-0 shadow-lg rounded-5 p-4">
+        <div class="login-overlay"></div>
 
-                <h1 class="fw-bold mb-4 text-center">
+        <div class="login-brand-content">
 
-                    Admin Login
+            <p class="login-badge">
+
+                Heritage Tourism Dashboard
+
+            </p>
+
+            <h1>
+
+                Manage Yogyakarta
+                Tourism Smarter
+
+            </h1>
+
+            <p class="login-description">
+
+                Sistem DSS wisata berbasis SAW
+                untuk analisis destinasi,
+                moderasi review,
+                dan pengelolaan wisata modern.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- ========================================
+    RIGHT SIDE
+    ========================================= -->
+
+    <div class="login-right">
+
+        <div class="login-card">
+
+            <!-- Logo -->
+            <div class="login-logo">
+
+                <h2>
+
+                    JogjaExplore
+
+                </h2>
+
+                <p>
+
+                    Admin Dashboard Access
+
+                </p>
+
+            </div>
+
+            <!-- Title -->
+            <div class="login-title-box">
+
+                <h1>
+
+                    Welcome Back
 
                 </h1>
 
-                @if(session('error'))
+                <p>
 
-                <div class="alert alert-danger">
+                    Login untuk mengakses panel admin.
 
-                    {{ session('error') }}
+                </p>
+
+            </div>
+
+            <!-- FORM -->
+            <form
+                action="/login"
+                method="POST"
+            >
+
+                @csrf
+
+                <!-- EMAIL -->
+
+                <div class="mb-4">
+
+                    <label class="form-label">
+
+                        Email Address
+
+                    </label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        class="form-control login-input"
+                        placeholder="Enter your email"
+                        required
+                    >
 
                 </div>
 
-                @endif
+                <!-- PASSWORD -->
 
-                <form method="POST" action="/login">
+                <div class="mb-4">
 
-                    @csrf
+                    <label class="form-label">
 
-                    <div class="mb-3">
+                        Password
 
-                        <label>Email</label>
+                    </label>
 
-                        <input
-                            type="email"
-                            name="email"
-                            class="form-control"
-                            required
-                        >
+                    <input
+                        type="password"
+                        name="password"
+                        class="form-control login-input"
+                        placeholder="Enter your password"
+                        required
+                    >
 
-                    </div>
+                </div>
 
-                    <div class="mb-4">
+                <!-- BUTTON -->
 
-                        <label>Password</label>
+                <button class="btn btn-maroon login-btn w-100">
 
-                        <input
-                            type="password"
-                            name="password"
-                            class="form-control"
-                            required
-                        >
+                    <i class="bi bi-box-arrow-in-right"></i>
 
-                    </div>
+                    Login Dashboard
 
-                    <button
-                        class="btn btn-maroon w-100">
+                </button>
 
-                        Login
+            </form>
 
-                    </button>
+            <!-- FOOTER -->
 
-                </form>
+            <div class="login-footer">
+
+                © 2026 JogjaExplore —
+                Heritage Tourism Platform
 
             </div>
 
@@ -74,4 +158,3 @@
 </div>
 
 @endsection
-

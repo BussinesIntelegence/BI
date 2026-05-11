@@ -25,7 +25,7 @@
 
                         </div>
 
-                        <h1 class="hero-title">
+                        <h1 class="recommendation-title">
 
                             Temukan Wisata
                             Terbaik Untukmu
@@ -188,6 +188,88 @@
         </div>
 
     </section>
+
+<div class="container">
+
+@if($topResult)
+
+<div class="smart-insight-card mb-5">
+
+    <div class="row align-items-center g-4">
+
+        <!-- IMAGE -->
+        <div class="col-lg-4 mb-3 mb-lg-0">
+
+            <img
+                src="{{ $topResult->image_url }}"
+                class="insight-image"
+                alt="{{ $topResult->nama }}"
+            >
+
+        </div>
+
+        <!-- CONTENT -->
+        <div class="col-lg-8">
+
+            <span class="insight-badge">
+
+                TOP RECOMMENDATION
+
+            </span>
+
+            <h2 class="insight-title">
+
+                {{ $topResult->nama }}
+
+            </h2>
+
+            <p class="insight-subtitle">
+
+                Destinasi ini menjadi rekomendasi terbaik
+                berdasarkan hasil perhitungan metode
+                Simple Additive Weighting (SAW).
+
+            </p>
+
+            <div class="insight-points">
+
+                <div class="insight-item">
+
+                    ✔ Memiliki rating tinggi
+                    ({{ $topResult->rating }})
+
+                </div>
+
+                <div class="insight-item">
+
+                    ✔ Skor SAW tertinggi
+                    ({{ number_format($topResult->score_saw,3) }})
+
+                </div>
+
+                <div class="insight-item">
+
+                    ✔ Sesuai preferensi wisata pengguna
+
+                </div>
+
+                <div class="insight-item">
+
+                    ✔ Memiliki performa review baik
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@endif
+
+</div>
 
     <!-- =========================
 TABEL PERHITUNGAN SAW
@@ -358,13 +440,10 @@ TOP RECOMMENDATION
                 <div class="position-relative">
 
                     <img
-                        loading="lazy"
-                        src="{{ $wisata->gambar
-                            ? asset('assets/images/wisata/' . $wisata->gambar)
-                            : 'https://via.placeholder.com/600x400?text=Wisata+Jogja' }}"
-
-                        class="card-img-top wisata-image"
-                        alt="{{ $wisata->nama }}"
+                    loading="lazy"
+                    src="{{ $wisata->image_url }}"
+                    class="card-img-top wisata-image"
+                    alt="{{ $wisata->nama }}"
                     >
 
                     <!-- Ranking -->

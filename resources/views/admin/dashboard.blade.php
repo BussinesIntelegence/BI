@@ -31,19 +31,6 @@ HEADER
         <!-- Right -->
         <div class="d-flex gap-3">
 
-            <button class="btn btn-light custom-outline-btn">
-
-                <i class="bi bi-calendar3"></i>
-                Last 30 Days
-
-            </button>
-
-            <button class="btn btn-maroon">
-
-                <i class="bi bi-download"></i>
-                Export Report
-
-            </button>
 
         </div>
 
@@ -111,54 +98,46 @@ STATISTIC CARDS
 
     </div>
 
-    <!-- Active -->
+    <!-- Total Reviews -->
     <div class="col-lg-3 col-md-6">
 
         <div class="admin-card">
 
             <div class="card-icon bg-soft-green">
 
-                <i class="bi bi-map"></i>
+                <i class="bi bi-chat-dots"></i>
 
             </div>
 
             <p class="admin-card-label">
-
-                Active Destinations
-
+                Total Reviews
             </p>
 
             <h2 class="admin-card-value">
-
-                {{ $totalWisata }}
-
+                {{ number_format($totalReviews) }}
             </h2>
 
         </div>
 
     </div>
 
-    <!-- Revenue -->
+    <!-- Incomplete Data -->
     <div class="col-lg-3 col-md-6">
 
         <div class="admin-card">
 
             <div class="card-icon bg-soft-blue">
 
-                <i class="bi bi-cash"></i>
+                <i class="bi bi-shield-exclamation"></i>
 
             </div>
 
             <p class="admin-card-label">
-
-                Estimated Revenue
-
+                Incomplete Data
             </p>
 
-            <h2 class="admin-card-value">
-
-                $128.5k
-
+            <h2 class="admin-card-value text-danger">
+                {{ number_format($incompleteData) }}
             </h2>
 
         </div>
@@ -168,169 +147,150 @@ STATISTIC CARDS
 </div>
 
 <!-- =========================
-ANALYTICS CHART
+QUICK ACTIONS
 ========================= -->
 
-<div class="row g-4 mb-5">
+<div class="admin-box mb-5">
 
-    <!-- LEFT -->
-    <div class="col-lg-6">
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-        <div class="admin-card p-4 h-100">
+        <div>
 
-            <h3 class="chart-title">
+            <h3 class="admin-box-title">
 
-                Kategori Wisata
+                Quick Actions
 
             </h3>
 
-            <p class="chart-subtitle">
+            <p class="text-secondary mb-0">
 
-                Distribusi destinasi wisata berdasarkan kategori
-
-            </p>
-
-            <div class="chart-wrapper">
-
-                <canvas id="kategoriChart"></canvas>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- RIGHT -->
-    <div class="col-lg-6">
-
-        <div class="admin-card p-4 h-100">
-
-            <h3 class="chart-title">
-
-                Top Rating Wisata
-
-            </h3>
-
-            <p class="chart-subtitle">
-
-                Destinasi dengan rating tertinggi
+                Shortcut untuk pengelolaan sistem wisata.
 
             </p>
 
-            <div class="chart-wrapper">
-
-                <canvas id="ratingChart"></canvas>
-
-            </div>
-
         </div>
 
     </div>
 
-</div>
+    <div class="row g-4">
 
-<!-- =========================
-CONTENT SECTION
-========================= -->
+        <!-- Add -->
+        <div class="col-lg-3 col-md-6">
 
-<div class="row g-4 mb-5">
+            <a
+                href="/admin/wisata/create"
+                class="quick-action-card"
+            >
 
-    <!-- LEFT -->
-    <div class="col-lg-8">
+                <div class="quick-icon bg-soft-red">
 
-        <div class="admin-box">
-
-            <div class="d-flex justify-content-between align-items-center mb-4">
-
-                <h3 class="admin-box-title">
-
-                    Monthly Visitor Trends
-
-                </h3>
-
-                <div class="d-flex gap-3">
-
-                    <span class="trend-dot red-dot">
-
-                        Domestic
-
-                    </span>
-
-                    <span class="trend-dot blue-dot">
-
-                        International
-
-                    </span>
+                    <i class="bi bi-plus-circle"></i>
 
                 </div>
 
-            </div>
+                <h5>
 
-            <!-- Dummy Chart -->
-            <div class="visitor-chart-wrapper">
+                    Add Destination
 
-                <canvas id="visitorChart"></canvas>
+                </h5>
 
-            </div>
+                <p>
+
+                    Tambahkan destinasi wisata baru.
+
+                </p>
+
+            </a>
 
         </div>
 
-    </div>
+        <!-- Manage -->
+        <div class="col-lg-3 col-md-6">
 
-    <!-- RIGHT -->
-    <div class="col-lg-4">
+            <a
+                href="/admin/wisata"
+                class="quick-action-card"
+            >
 
-        <div class="admin-box">
+                <div class="quick-icon bg-soft-green">
 
-            <div class="d-flex justify-content-between align-items-center mb-4">
-
-                <h3 class="admin-box-title">
-
-                    Top Destinations
-
-                </h3>
-
-                <a href="#"
-                    class="view-all-link">
-
-                    View All
-
-                </a>
-
-            </div>
-
-            @foreach($topWisata as $wisata)
-
-            <div class="top-destination-item">
-
-                <div class="d-flex justify-content-between mb-2">
-
-                    <strong>
-
-                        {{ $wisata->nama }}
-
-                    </strong>
-
-                    <span>
-
-                        {{ rand(4,15) }}k views
-
-                    </span>
+                    <i class="bi bi-map"></i>
 
                 </div>
 
-                <div class="progress custom-progress">
+                <h5>
 
-                    <div
-                        class="progress-bar custom-progress-bar"
-                        style="width: {{ rand(60,95) }}%"
-                    ></div>
+                    Manage Destinations
+
+                </h5>
+
+                <p>
+
+                    Kelola seluruh data wisata.
+
+                </p>
+
+            </a>
+
+        </div>
+
+        <!-- Analytics -->
+        <div class="col-lg-3 col-md-6">
+
+            <a
+                href="/admin/analysis"
+                class="quick-action-card"
+            >
+
+                <div class="quick-icon bg-soft-blue">
+
+                    <i class="bi bi-bar-chart"></i>
 
                 </div>
 
-            </div>
+                <h5>
 
-            @endforeach
+                    Open Analytics
+
+                </h5>
+
+                <p>
+
+                    Lihat analisis DSS & SAW.
+
+                </p>
+
+            </a>
+
+        </div>
+
+        <!-- Reviews -->
+        <div class="col-lg-3 col-md-6">
+
+            <a
+                href="/admin/review"
+                class="quick-action-card"
+            >
+
+                <div class="quick-icon bg-soft-yellow">
+
+                    <i class="bi bi-chat-dots"></i>
+
+                </div>
+
+                <h5>
+
+                    Visitor Reviews
+
+                </h5>
+
+                <p>
+
+                    Pantau review pengunjung.
+
+                </p>
+
+            </a>
 
         </div>
 
@@ -381,18 +341,34 @@ RECENT ACTIVITY
 
             <tbody>
 
+                @foreach($recentWisata as $wisata)
+
                 <tr>
 
                     <td>
+
                         New Destination Added:
-                        Goa Jomblang
+                        {{ $wisata->nama }}
+
                     </td>
 
-                    <td>Destination</td>
+                    <td>
 
-                    <td>Budi Kusuma</td>
+                        Destination
 
-                    <td>2 mins ago</td>
+                    </td>
+
+                    <td>
+
+                        Admin
+
+                    </td>
+
+                    <td>
+
+                        {{ $wisata->created_at->diffForHumans() }}
+
+                    </td>
 
                     <td>
 
@@ -406,57 +382,9 @@ RECENT ACTIVITY
 
                 </tr>
 
-                <tr>
+                @endforeach
 
-                    <td>
-                        Updated Destination:
-                        Borobudur
-                    </td>
-
-                    <td>Content</td>
-
-                    <td>Admin</td>
-
-                    <td>1 hour ago</td>
-
-                    <td>
-
-                        <span class="status-badge warning-badge">
-
-                            Updating
-
-                        </span>
-
-                    </td>
-
-                </tr>
-
-                <tr>
-
-                    <td>
-                        Deleted Destination:
-                        Pantai X
-                    </td>
-
-                    <td>Destination</td>
-
-                    <td>Super Admin</td>
-
-                    <td>3 hours ago</td>
-
-                    <td>
-
-                        <span class="status-badge danger-badge">
-
-                            Removed
-
-                        </span>
-
-                    </td>
-
-                </tr>
-
-            </tbody>
+                </tbody>
 
         </table>
 
@@ -464,7 +392,68 @@ RECENT ACTIVITY
 
 </div>
 
-```html
+<!-- =========================
+LATEST DESTINATIONS
+========================= -->
+
+<div class="admin-box mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h3 class="admin-box-title">
+
+            Latest Destinations
+
+        </h3>
+
+    </div>
+
+    <div class="row g-4">
+
+        @foreach($topWisata->take(3) as $wisata)
+
+        <div class="col-lg-4">
+
+            <div class="latest-card">
+
+                <img
+                    src="{{ $wisata->image_url }}"
+                    class="latest-image"
+                    alt="{{ $wisata->nama }}"
+                >
+
+                <div class="latest-body">
+
+                    <span class="category-badge">
+
+                        {{ $wisata->kategori }}
+
+                    </span>
+
+                    <h5>
+
+                        {{ $wisata->nama }}
+
+                    </h5>
+
+                    <p>
+
+                        ⭐ {{ number_format($wisata->rating,1) }}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        @endforeach
+
+    </div>
+
+</div>
+
 <script>
 
 document.addEventListener('DOMContentLoaded', function(){

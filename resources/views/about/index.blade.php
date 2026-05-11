@@ -8,8 +8,6 @@ HERO
 
 <section class="about-hero">
 
-    <div class="hero-overlay"></div>
-
     <div class="container position-relative">
 
         <div class="hero-content">
@@ -93,9 +91,13 @@ ABOUT
             <div class="col-lg-6">
 
                 <img
-                    src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1200&auto=format&fit=crop"
+
+                    src="{{ asset('assets/images/wisata/jogja.png') }}"
+
                     class="about-image"
+
                     alt="About Jogja"
+
                 >
 
             </div>

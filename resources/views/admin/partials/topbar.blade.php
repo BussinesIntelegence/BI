@@ -1,53 +1,85 @@
 <div class="admin-topbar">
 
-    <!-- Left -->
+    <!-- ========================================
+    LEFT
+    ========================================= -->
+
     <div>
 
-        <h3 class="admin-title">
+        <h3 class="admin-page-title">
 
-            JogjaExplore
+            @if(request()->is('admin/dashboard'))
+
+                Dashboard Overview
+
+            @elseif(request()->is('admin/wisata*'))
+
+                Destination Management
+
+            @elseif(request()->is('admin/analysis'))
+
+                DSS Analytics
+
+            @elseif(request()->is('admin/reviews*'))
+
+                Visitor Reviews
+
+            @else
+
+                Admin Panel
+
+            @endif
 
         </h3>
 
+        <p class="admin-page-subtitle">
+
+            Monitor tourism insights &
+            manage Yogyakarta destinations.
+
+        </p>
+
     </div>
 
-    <!-- Right -->
+    <!-- ========================================
+    RIGHT
+    ========================================= -->
+
     <div class="topbar-right">
 
-        <!-- Search -->
-        <div class="search-admin">
+        <!-- Date -->
 
-            <i class="bi bi-search"></i>
+        <div class="topbar-date">
 
-            <input
-                type="text"
-                placeholder="Search insights..."
-            >
+            <i class="bi bi-calendar3"></i>
+
+            {{ now()->format('d M Y') }}
 
         </div>
 
-        <!-- Notification -->
-        <i class="bi bi-bell topbar-icon"></i>
 
-        <!-- Settings -->
-        <i class="bi bi-gear topbar-icon"></i>
+        <!-- Admin Profile -->
 
-        <!-- Profile -->
         <div class="admin-profile">
 
-            <img
-                src="https://i.pravatar.cc/100"
-                alt=""
-            >
+            <div class="admin-avatar">
+
+                A
+
+            </div>
 
             <div>
 
                 <strong>
+
                     Admin User
+
                 </strong>
 
                 <p>
+
                     System Administrator
+
                 </p>
 
             </div>

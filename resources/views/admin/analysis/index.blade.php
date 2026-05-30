@@ -170,6 +170,34 @@
 
     </div>
 
+    <div class="col-12 col-sm-6 col-xl-3">
+
+    <div class="summary-card">
+
+        <div class="summary-top">
+
+            <div>
+
+                <p class="summary-label">
+                    AVG WEEKDAY PRICE
+                </p>
+
+                <h2 class="summary-value">
+                    Rp {{ number_format($averageWeekdayPrice) }}
+                </h2>
+
+                <span class="summary-desc">
+                    Harga tiket weekday
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
     <!-- ========================================
 SMART INSIGHT PANEL
 ======================================== -->
@@ -253,15 +281,16 @@ SMART INSIGHT PANEL
                 </div>
 
                 <h6>
-                    Wisata Terbaik
+                    Wisata Terpopuler
                 </h6>
 
                 <h3>
-                    {{ $topDestination->nama }}
+                    {{ $topDestination->tour->place_name ?? '-' }}
                 </h3>
 
                 <p>
-                    Memiliki performa rating tertinggi.
+                    Popularity Score:
+                    {{ number_format($topDestination->popularity_score,2) }}
                 </p>
 
             </div>
@@ -303,70 +332,166 @@ SMART INSIGHT PANEL
     <!-- ======================================== -->
     <!-- CHART SECTION -->
     <!-- ======================================== -->
+    
     <div class="row g-4 mb-4">
 
-        <!-- DISTRIBUSI BOBOT -->
-        <div class="col-12 col-lg-6">
+    <!-- Distribusi -->
+    <div class="col-lg-6">
 
-            <div class="dashboard-panel">
+        <div class="dashboard-panel h-100">
 
-                <div class="panel-header">
-                    <h4>
-                        Distribusi Bobot Kriteria
-                    </h4>
-                </div>
+            <div class="panel-header">
+                <h4>Distribusi Kategori Wisata</h4>
+            </div>
 
-                <div class="chart-wrapper">
-                    <canvas id="criteriaChart"></canvas>
-                </div>
-
-                <div class="mini-weight-grid">
-
-                    <div class="mini-weight-card">
-                        <span>Harga</span>
-                        <strong>20%</strong>
-                    </div>
-
-                    <div class="mini-weight-card">
-                        <span>Jarak</span>
-                        <strong>20%</strong>
-                    </div>
-
-                    <div class="mini-weight-card">
-                        <span>Rating</span>
-                        <strong>20%</strong>
-                    </div>
-
-                </div>
-
+            <div class="chart-wrapper">
+                <canvas id="categoryAnalyticsChart"></canvas>
             </div>
 
         </div>
 
-        <!-- TREN PRIORITAS -->
-        <div class="col-12 col-lg-6">
+    </div>
 
-            <div class="dashboard-panel">
+    <!-- Analisis -->
+    <div class="col-lg-6">
 
-                <div class="panel-header">
-                    <h4>
-                        Tren Prioritas Wisatawan
-                    </h4>
+        <div class="dashboard-panel h-100">
 
-                    <p>
-                        Data preferensi berdasarkan aktivitas pencarian wisata.
-                    </p>
-                </div>
+            <div class="panel-header">
 
-                <div class="chart-wrapper">
-                    <canvas id="priorityChart"></canvas>
-                </div>
+                <h4>Analisis Kategori Wisata</h4>
+
+                <p>
+                    Ringkasan performa kategori.
+                </p>
+
+            </div>
+
+            <div class="table-responsive">
+
+            <table class="table analytics-table">
+
+                <thead>
+                    <tr>
+                        <th>Kategori</th>
+                        <th>Total Wisata</th>
+                        <th>Avg Rating</th>
+                        <th>Avg Harga</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach($categoryAnalytics as $item)
+
+                    <tr>
+                        <td>{{ $item['category'] }}</td>
+                        <td>{{ $item['total'] }}</td>
+                        <td>{{ $item['avg_rating'] }}</td>
+                        <td>
+                            Rp {{ number_format($item['avg_price']) }}
+                        </td>
+                    </tr>
+
+                    @endforeach
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row g-4 mb-4">
+
+    <!-- Popularity Ranking -->
+    <div class="col-lg-6">
+
+        <div class="dashboard-panel h-100">
+
+            <div class="panel-header">
+
+                <h4>
+                    Top 10 Popularity Ranking
+                </h4>
+
+            </div>
+
+            <div class="table-responsive">
+
+            <table class="table analytics-table">
+
+                <thead>
+                    <tr>
+                        <th>Wisata</th>
+                        <th>Popularity</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach($topPopularityDestinations as $item)
+
+                    <tr>
+
+                        <td>
+                            {{ $item->tour->place_name }}
+                        </td>
+
+                        <td>
+                            {{ number_format($item->popularity_score,2) }}
+                        </td>
+
+                    </tr>
+
+                    @endforeach
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <!-- Tren -->
+    <div class="col-lg-6">
+
+        <div class="dashboard-panel h-100">
+
+            <div class="panel-header">
+
+                <h4>
+                    Tren Prioritas Wisatawan
+                </h4>
+
+                <p>
+                    Berdasarkan popularity score.
+                </p>
+
+            </div>
+
+            <div class="chart-wrapper">
+
+                <canvas
+                    id="priorityChart"
+                ></canvas>
 
             </div>
 
         </div>
 
     </div>
+
+</div>
+
 
     <!-- ======================================== -->
     <!-- SIMULASI + TABLE -->
@@ -383,6 +508,7 @@ SMART INSIGHT PANEL
                         Simulasi What-If
                     </h4>
                 </div>
+
 
                 <!-- ================================= -->
                 <!-- FORM SIMULASI -->
@@ -423,18 +549,18 @@ SMART INSIGHT PANEL
 
                     </div>
 
-                    <!-- Jarak -->
+                   <!-- Review -->
                     <div class="range-group">
 
                         <div class="weight-item">
 
                             <div class="weight-header">
 
-                                <label>Bobot Jarak</label>
+                                <label>Bobot Review</label>
 
                                 <span
                                     class="weight-badge"
-                                    id="jarakValue"
+                                    id="reviewValue"
                                 >
                                     20%
                                 </span>
@@ -448,28 +574,28 @@ SMART INSIGHT PANEL
                                 max="100"
                                 value="20"
 
-                                data-target="jarakValue"
-                                data-weight="jarak"
+                                data-target="reviewValue"
+                                data-weight="review"
                             >
 
                         </div>
 
                     </div>
 
-                    <!-- Fasilitas -->
+                    <!-- Popularitas -->
                     <div class="range-group">
 
                         <div class="weight-item">
 
                             <div class="weight-header">
 
-                                <label>Bobot Fasilitas</label>
+                                <label>Bobot Popularitas</label>
 
                                 <span
                                     class="weight-badge"
-                                    id="fasilitasValue"
+                                    id="popularitasValue"
                                 >
-                                    15%
+                                    20%
                                 </span>
 
                             </div>
@@ -479,10 +605,10 @@ SMART INSIGHT PANEL
                                 class="form-range weight-slider"
                                 min="0"
                                 max="100"
-                                value="15"
+                                value="20"
 
-                                data-target="fasilitasValue"
-                                data-weight="fasilitas"
+                                data-target="popularitasValue"
+                                data-weight="popularitas"
                             >
 
                         </div>
@@ -522,36 +648,15 @@ SMART INSIGHT PANEL
 
                     </div>
 
-                    <!-- Popularitas -->
-                    <div class="range-group">
+                    <div class="alert alert-light mt-3">
 
-                        <div class="weight-item">
+                        Total Bobot :
 
-                            <div class="weight-header">
+                        <strong id="totalWeight">
 
-                                <label>Bobot Popularitas</label>
+                            100%
 
-                                <span
-                                    class="weight-badge"
-                                    id="popularitasValue"
-                                >
-                                    10%
-                                </span>
-
-                            </div>
-
-                            <input
-                                type="range"
-                                class="form-range weight-slider"
-                                min="0"
-                                max="100"
-                                value="10"
-
-                                data-target="popularitasValue"
-                                data-weight="popularitas"
-                            >
-
-                        </div>
+                        </strong>
 
                     </div>
 
@@ -568,6 +673,29 @@ SMART INSIGHT PANEL
                     </button>
 
                 </form>
+                <div class="mini-weight-grid">
+
+                    <div class="mini-weight-card">
+                        <span>Harga</span>
+                        <strong>30%</strong>
+                    </div>
+
+                    <div class="mini-weight-card">
+                        <span>Rating</span>
+                        <strong>30%</strong>
+                    </div>
+
+                    <div class="mini-weight-card">
+                        <span>Review</span>
+                        <strong>20%</strong>
+                    </div>
+
+                    <div class="mini-weight-card">
+                        <span>Popularitas</span>
+                        <strong>20%</strong>
+                    </div>
+
+                </div>
 
             </div>
 
@@ -610,12 +738,15 @@ SMART INSIGHT PANEL
                             @foreach($topWisata as $wisata)
 
                             <tr
-
                                 class="wisata-row"
 
                                 data-rating="{{ $wisata->rating }}"
-                                data-popularitas="{{ $wisata->total_review ?? 1000 }}"
 
+                                data-review="{{ $wisata->vote_count }}"
+
+                                data-popularitas="{{ $wisata->popularity_score }}"
+
+                                data-harga="{{ $wisata->htm_weekday }}"
                             >
 
                                 <td>
@@ -624,7 +755,7 @@ SMART INSIGHT PANEL
 
                                         @php
 
-                                            $kategori = strtolower($wisata->kategori);
+                                            $kategori = strtolower($wisata->tour->category->category_name ?? '');
 
                                             $placeholder = 'tourism';
 
@@ -664,23 +795,29 @@ SMART INSIGHT PANEL
                                         @endphp
 
                                         <img
-
-                                            src="{{ $wisata->gambar
-                                                ? asset('assets/images/wisata/' . $wisata->gambar)
-                                                : 'https://picsum.photos/seed/' . $wisata->id . '/200/200' }}"
-
-                                            alt="{{ $wisata->nama }}"
-
-                                        >
+                                                src="{{ $wisata->gambar
+                                                    ? asset('assets/images/wisata/' . $wisata->gambar)
+                                                    : 'https://picsum.photos/seed/' . $wisata->id . '/200/200' }}"
+                                                alt="{{ $wisata->tour->place_name ?? '-' }}"
+                                            >
 
                                         <div>
 
                                             <strong>
-                                                {{ $wisata->nama }}
+                                                {{ $wisata->tour->place_name ?? '-' }}
                                             </strong>
 
+                                            <br>
+
+                                            <small class="text-muted">
+
+                                                Popularity:
+                                                {{ number_format($wisata->popularity_score,2) }}
+
+                                            </small>
+
                                             <small>
-                                                {{ $wisata->kategori }}
+                                                {{ $wisata->tour->category->category_name ?? '-' }}
                                             </small>
 
                                         </div>
@@ -693,7 +830,7 @@ SMART INSIGHT PANEL
 
                                     <span class="score-text score-value">
 
-                                        {{ number_format($wisata->rating, 3) }}
+                                        {{ number_format($wisata->popularity_score, 3) }}
 
                                     </span>
 
@@ -701,13 +838,13 @@ SMART INSIGHT PANEL
 
                                 <td>
 
-                                    @if($wisata->harga_weekday <= 10000)
+                                    @if($wisata->htm_weekday <= 10000)
 
                                         <span class="badge bg-success-subtle text-success">
                                             Terjangkau
                                         </span>
 
-                                    @elseif($wisata->harga_weekday <= 30000)
+                                    @elseif($wisata->htm_weekday <= 30000)
 
                                         <span class="badge bg-warning-subtle text-warning-emphasis">
                                             Menengah
@@ -725,25 +862,13 @@ SMART INSIGHT PANEL
 
                                 <td>
 
-                                    @if($wisata->rating >= 4.7)
+                                    <span
+                                        class="badge bg-primary-subtle text-primary recommendation-badge"
+                                    >
 
-                                        <span class="badge bg-success-subtle text-success">
-                                            Sangat Tinggi
-                                        </span>
+                                        Direkomendasikan
 
-                                    @elseif($wisata->rating >= 4.4)
-
-                                        <span class="badge bg-primary-subtle text-primary">
-                                            Tinggi
-                                        </span>
-
-                                    @else
-
-                                        <span class="badge bg-info-subtle text-info">
-                                            Cukup
-                                        </span>
-
-                                    @endif
+                                    </span>
 
                                 </td>
 
@@ -778,11 +903,11 @@ SMART INSIGHT PANEL
                 <div>
 
                     <h4>
-                        Tren Popularitas Wisata
+                        Popularity Score per Kategori
                     </h4>
 
                     <p>
-                        Analisis perkembangan popularitas destinasi wisata.
+                        Rata-rata popularity score berdasarkan kategori wisata.
                     </p>
 
                 </div>
@@ -935,7 +1060,11 @@ SMART INSIGHT PANEL
     // =========================================
 
     const priorityCtx =
-        document.getElementById('priorityChart');
+    document.getElementById(
+        'priorityChart'
+    );
+
+if(priorityCtx){
 
     new Chart(priorityCtx, {
 
@@ -943,38 +1072,46 @@ SMART INSIGHT PANEL
 
         data: {
 
-            labels: {!! json_encode($wisataTypes->pluck('kategori')) !!},
+            labels:
+                @json(
+                    $popularityPerCategory->keys()
+                ),
 
-            datasets: [{
+            datasets: [
 
-                label: 'Prioritas',
+                {
 
-                data: {!! json_encode($wisataTypes->pluck('total')) !!},
+                    label:
+                        'Popularity Score',
 
-                backgroundColor: '#c94444',
-                borderRadius: 12
+                    data:
+                        @json(
+                            $popularityPerCategory->values()
+                        ),
 
-            }]
+                    backgroundColor:
+                        '#c94444',
+
+                    borderRadius: 10
+
+                }
+
+            ]
 
         },
 
         options: {
 
             responsive: true,
+
             maintainAspectRatio: false,
 
             plugins: {
 
                 legend: {
+
                     display: false
-                }
 
-            },
-
-            scales: {
-
-                y: {
-                    beginAtZero: true
                 }
 
             }
@@ -983,8 +1120,9 @@ SMART INSIGHT PANEL
 
     });
 
-</script>
+}
 
+</script>
 <script>
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -1071,62 +1209,247 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <script>
 
-/* ========================================
-WEIGHT SLIDER
-======================================== */
-
 const sliders =
     document.querySelectorAll('.weight-slider');
 
 /* ========================================
-UPDATE BADGE VALUE
+SYNC WEIGHT
 ======================================== */
 
-sliders.forEach(slider => {
+function syncWeights(changedSlider){
 
-    slider.addEventListener('input', function () {
+    const sliders =
+        document.querySelectorAll(
+            '.weight-slider'
+        );
 
-        const target =
-            document.getElementById(
-                this.dataset.target
-            );
+    let total = 0;
 
-        target.innerText =
-            this.value + '%';
+    sliders.forEach(slider => {
+
+        total += parseInt(slider.value);
 
     });
 
+    if(total <= 100){
+        return;
+    }
+
+    let excess = total - 100;
+
+    const others =
+        [...sliders].filter(
+            s => s !== changedSlider
+        );
+
+    others.forEach(slider => {
+
+        if(excess <= 0){
+            return;
+        }
+
+        let value =
+            parseInt(slider.value);
+
+        let reduction =
+            Math.min(
+                value - 0,
+                excess
+            );
+
+        if(reduction > 0){
+
+            slider.value =
+                value - reduction;
+
+            excess -= reduction;
+
+        }
+
+    });
+
+}
+
+/* ========================================
+UPDATE BADGES
+======================================== */
+
+function updateSliderDisplay(){
+
+    document.getElementById(
+        'hargaValue'
+    ).innerText =
+        document.querySelector(
+            '[data-weight="harga"]'
+        ).value + '%';
+
+    document.getElementById(
+        'reviewValue'
+    ).innerText =
+        document.querySelector(
+            '[data-weight="review"]'
+        ).value + '%';
+
+    document.getElementById(
+        'popularitasValue'
+    ).innerText =
+        document.querySelector(
+            '[data-weight="popularitas"]'
+        ).value + '%';
+
+    document.getElementById(
+        'ratingValue'
+    ).innerText =
+        document.querySelector(
+            '[data-weight="rating"]'
+        ).value + '%';
+
+}
+
+/* ========================================
+UPDATE TOTAL WEIGHT
+======================================== */
+
+
+function updateTotalWeight(){
+
+    const harga =
+        parseInt(
+            document.querySelector(
+                '[data-weight="harga"]'
+            ).value
+        );
+
+    const review =
+        parseInt(
+            document.querySelector(
+                '[data-weight="review"]'
+            ).value
+        );
+
+    const popularitas =
+        parseInt(
+            document.querySelector(
+                '[data-weight="popularitas"]'
+            ).value
+        );
+
+    const rating =
+        parseInt(
+            document.querySelector(
+                '[data-weight="rating"]'
+            ).value
+        );
+
+    const total =
+
+        harga +
+        review +
+        popularitas +
+        rating;
+
+    document.getElementById(
+        'totalWeight'
+    ).innerHTML =
+
+        '<strong>Total Bobot : ' +
+        total +
+        '%</strong>';
+
+}
+
+
+/* ========================================
+INIT TOTAL WEIGHT
+======================================== */
+
+updateTotalWeight();
+
+sliders.forEach(slider => {
+
+    slider.addEventListener(
+        'input',
+        function(){
+
+            syncWeights(this);
+
+            updateSliderDisplay();
+
+            updateTotalWeight();
+
+        }
+    );
+
 });
+
+updateSliderDisplay();
+
 
 /* ========================================
 SIMULATE BUTTON
 ======================================== */
 
 const simulateBtn =
-    document.getElementById('simulateBtn');
+    document.getElementById(
+        'simulateBtn'
+    );
 
-simulateBtn.addEventListener('click', function () {
+simulateBtn.addEventListener(
+    'click',
+    function(){
 
-    const harga =
-        document.querySelector('[data-weight="harga"]').value;
+        const harga =
+            parseInt(
+                document.querySelector(
+                    '[data-weight="harga"]'
+                ).value
+            );
 
-    const jarak =
-        document.querySelector('[data-weight="jarak"]').value;
+        const review =
+            parseInt(
+                document.querySelector(
+                    '[data-weight="review"]'
+                ).value
+            );
 
-    const fasilitas =
-        document.querySelector('[data-weight="fasilitas"]').value;
+        const rating =
+            parseInt(
+                document.querySelector(
+                    '[data-weight="rating"]'
+                ).value
+            );
 
-    const rating =
-        document.querySelector('[data-weight="rating"]').value;
+        const popularitas =
+            parseInt(
+                document.querySelector(
+                    '[data-weight="popularitas"]'
+                ).value
+            );
 
-    const popularitas =
-        document.querySelector('[data-weight="popularitas"]').value;
+        /* ========================================
+        VALIDASI TOTAL BOBOT
+        ======================================== */
 
-    /*
-    ========================================
-    SIMULASI SCORE
-    ========================================
-    */
+        const totalWeight =
+
+            harga +
+
+            rating +
+
+            review +
+
+            popularitas;
+
+        if(totalWeight !== 100){
+
+            alert(
+                'Total bobot harus 100%'
+            );
+
+            return;
+
+        }
+
 
         /*
         ========================================
@@ -1155,28 +1478,135 @@ simulateBtn.addEventListener('click', function () {
         UPDATE SCORE
         ========================================
         */
+                const maxReview = Math.max(
+            ...rows.map(r =>
+                parseFloat(
+                    r.dataset.review
+                )
+            )
+        );
+
+        const maxPopularity = Math.max(
+            ...rows.map(r =>
+                parseFloat(
+                    r.dataset.popularitas
+                )
+            )
+        );
+
+        const minHarga = Math.min(
+            ...rows.map(r =>
+                parseFloat(
+                    r.dataset.harga
+                )
+            )
+        );
+
+        const maxRating = Math.max(
+            ...rows.map(r =>
+                parseFloat(
+                    r.dataset.rating
+                )
+            )
+        );
+
+        /*
+        ========================================
+        LOOP ROWS
+        ========================================
+        */
+
 
         rows.forEach(row => {
 
             const ratingValue =
-                parseFloat(row.dataset.rating);
+                parseFloat(
+                    row.dataset.rating || 0
+                );
+
+            const reviewValue =
+                parseFloat(
+                    row.dataset.review || 0
+                );
 
             const popularitasValue =
-                parseFloat(row.dataset.popularitas);
+                parseFloat(
+                    row.dataset.popularitas || 0
+                );
+
+            const hargaValue =
+                parseFloat(
+                    row.dataset.harga || 1
+                );
 
             /*
             ========================================
-            DUMMY SAW SCORE
+            NORMALISASI SAW
             ========================================
             */
 
+            const nHarga =
+                minHarga / Math.max(
+                    hargaValue,
+                    1
+                );
+
+            const nRating =
+                ratingValue / Math.max(
+                    maxRating,
+                    1
+                );
+
+            const nReview =
+                reviewValue / Math.max(
+                    maxReview,
+                    1
+                );
+
+            const nPopularity =
+                popularitasValue / Math.max(
+                    maxPopularity,
+                    1
+                );
+
+            /*
+            ========================================
+            SAW SCORE
+            ========================================
+            */
+            console.log({
+
+                nama:
+                    row.querySelector('strong')
+                        ?.innerText,
+
+                hargaValue,
+                reviewValue,
+                ratingValue,
+                popularitasValue,
+
+                nHarga,
+                nRating,
+                nReview,
+                nPopularity
+
+            });
+
             const score = (
 
-                (ratingValue * rating)
+                (nHarga * harga)
 
                 +
 
-                ((popularitasValue / 1000) * popularitas)
+                (nRating * rating)
+
+                +
+
+                (nReview * review)
+
+                +
+
+                (nPopularity * popularitas)
 
             ) / 100;
 
@@ -1190,14 +1620,54 @@ simulateBtn.addEventListener('click', function () {
 
             /*
             ========================================
-            UPDATE UI
+            UPDATE SCORE UI
             ========================================
             */
 
             row.querySelector('.score-value')
-
                 .innerText =
                 score.toFixed(3);
+
+            /*
+            ========================================
+            UPDATE RECOMMENDATION BADGE
+            ========================================
+            */
+
+            const badge =
+                row.querySelector(
+                    '.recommendation-badge'
+                );
+
+            if (!badge) return;
+
+            if(score >= 0.80){
+
+                badge.innerText =
+                    'Sangat Direkomendasikan';
+
+                badge.className =
+                    'badge bg-success-subtle text-success recommendation-badge';
+
+            }
+            else if(score >= 0.60){
+
+                badge.innerText =
+                    'Direkomendasikan';
+
+                badge.className =
+                    'badge bg-primary-subtle text-primary recommendation-badge';
+
+            }
+            else{
+
+                badge.innerText =
+                    'Pertimbangkan';
+
+                badge.className =
+                    'badge bg-warning-subtle text-warning recommendation-badge';
+
+            }
 
         });
 
@@ -1261,17 +1731,7 @@ new Chart(trendCtx, {
 
                 label: 'Popularitas',
 
-                data: [
-
-                    1200,
-                    1900,
-                    3000,
-                    4200,
-                    5100,
-                    6100,
-                    7200
-
-                ],
+                data: @json($trendData),
 
                 borderColor: '#c94444',
 
@@ -1350,11 +1810,10 @@ new Chart(radarCtx, {
 
         labels: [
 
-            'Harga',
-            'Jarak',
-            'Fasilitas',
-            'Rating',
-            'Popularitas'
+        'Harga',
+        'Rating',
+        'Review',
+        'Popularitas'
 
         ],
 
@@ -1364,15 +1823,7 @@ new Chart(radarCtx, {
 
                 label: 'SAW Weight',
 
-                data: [
-
-                    20,
-                    20,
-                    15,
-                    25,
-                    10
-
-                ],
+                data: @json($radarData),
 
                 borderColor: '#c94444',
 
@@ -1436,6 +1887,43 @@ new Chart(radarCtx, {
 
 });
 
+const categoryCtx =
+
+document.getElementById(
+    'categoryAnalyticsChart'
+);
+
+new Chart(categoryCtx, {
+
+    type: 'bar',
+
+    data: {
+
+        labels:
+
+            @json(
+                $categoryLabels
+            ),
+
+        datasets: [{
+
+            label:
+                'Jumlah Wisata',
+
+            data:
+
+                @json(
+                    $categoryTotals
+                )
+
+        }]
+
+    }
+
+});
+
 </script>
+
+
 
 @endsection

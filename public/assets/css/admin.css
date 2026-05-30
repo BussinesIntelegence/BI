@@ -2198,3 +2198,21 @@ LOGOUT BUTTON FIX
 
     cursor: pointer;
 }
+
+.analytics-table {
+    font-size: 14px;
+}
+
+.analytics-table thead th {
+    background: #f8f9fc;
+    font-weight: 700;
+}
+
+.chart-wrapper {
+    height: 320px;
+    position: relative;
+}
+
+.dashboard-panel {
+    height: 100%;
+}
